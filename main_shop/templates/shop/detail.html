@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-2xl shadow-xs border border-gray-100 p-6 md:p-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div class="aspect-square bg-gray-50 rounded-xl overflow-hidden border border-gray-100">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+            {% else %}
+                <div class="w-full h-full flex items-center justify-center text-gray-400">Зображення відсутнє</div>
+            {% endif %}
+        </div>
+
+        <div class="flex flex-col justify-between">
+            <div>
+                <nav class="text-sm text-gray-500 mb-4">
+                    <a href="{% url 'shop:product_list' %}" class="hover:underline">Каталог</a> / 
+                    <a href="{{ product.category.get_absolute_url }}" class="hover:underline">{{ product.category.name }}</a>
+                </nav>
+                <h1 class="text-3xl font-bold text-gray-950 mb-4">{{ product.name }}</h1>
+                <p class="text-2xl font-bold text-indigo-600 mb-6">{{ product.price }} ₴</p>
+                <hr class="border-gray-100 mb-6">
+                <h3 class="font-semibold text-gray-900 mb-2">Опис товару</h3>
+                <div class="text-gray-600 leading-relaxed mb-6">
+                    {{ product.description|linebreaks }}
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                <form action="#" method="post" class="flex items-center gap-4">
+                    {% csrf_token %}
+                    <div class="w-24">
+                        <label for="quantity" class="sr-only">Кількість</label>
+                        <select id="quantity" name="quantity" class="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-indigo-600">
+                            {% for i in "12345" %}
+                                <option value="{{ forloop.counter }}">{{ forloop.counter }} шт.</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="flex-grow bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition text-center shadow-xs">
+                        Додати до кошика
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
