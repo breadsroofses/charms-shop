@@ -8,7 +8,9 @@
         <h2 class="text-lg font-semibold text-gray-900 mb-4">Категорії</h2>
         <ul class="space-y-2 bg-white p-4 rounded-xl shadow-xs border border-gray-100">
             <li class="{% if not category %}font-bold text-indigo-600{% endif %}">
-                <a href="{% url 'shop:product_list' %}" class="block py-1.5 hover:text-indigo-600 transition">Всі товари</a>
+                <a href="{% url 'shop:product_list' %}" ...>Всі товари</a>
+
+                <a href="{% url 'main_shop:product_list' %}" class="block py-1.5 hover:text-indigo-600 transition">Всі товари</a>
             </li>
             {% for c in categories %}
                 <li class="{% if category.slug == c.slug %}font-bold text-indigo-600{% endif %}">
@@ -53,3 +55,7 @@
     </div>
 </div>
 {% endblock %}
+
+<a href="{% url 'main_shop:add_to_cart' product.id %}" class="btn btn-primary">
+    Додати в кошик
+</a>

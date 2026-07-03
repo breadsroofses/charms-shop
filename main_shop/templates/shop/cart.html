@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Ваш кошик{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-2xl font-bold text-gray-900 mb-6">Ваш кошик</h1>
+
+    {% if cart_products %}
+        <div class="bg-white rounded-xl shadow-xs border border-gray-100 overflow-hidden p-6">
+            <div class="divide-y divide-gray-100">
+                {% for product in cart_products %}
+                    <div class="flex items-center justify-between py-4 {% if forloop.first %}pt-0{% endif %} {% if forloop.last %}pb-0{% endif %}">
+                        <div>
+                            <h3 class="font-medium text-gray-900">{{ product.name }}</h3>
+                            <p class="text-sm text-gray-500">{{ product.price }} грн × {{ product.quantity }} шт.</p>
+                        </div>
+                        <span class="font-semibold text-gray-900">{{ product.total_price }} грн</span>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <div class="mt-6 pt-6 border-t border-gray-100 flex justify-between items-center">
+                <span class="text-lg font-bold text-gray-900">Всього до сплати:</span>
+                <span class="text-xl font-bold text-indigo-600">{{ total_price }} грн</span>
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center py-12 bg-white rounded-xl border border-dashed border-gray-200">
+            <p class="text-gray-500 mb-4">Ваш кошик наразі порожній.</p>
+            <a href="{% url 'main_shop:product_list' %}" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition">
+                Повернутися до покупок
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
